@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+ <PropertyGroup>
+ 	<TargetFramework>net8.0</TargetFramework>
+ 	<Nullable>annotations</Nullable>
+ 	<ImplicitUsings>enable</ImplicitUsings>
+ </PropertyGroup>
+
+  <ItemGroup>
+  	<PackageReference Include="AutoMapper" Version="12.0.1" />
+  	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+  	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+  	<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="7.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<ProjectReference Include="..\COMPANY_SUPPLIER.INF\COMPANY_SUPPLIER.INF.csproj" />
+  </ItemGroup>
+</Project>
