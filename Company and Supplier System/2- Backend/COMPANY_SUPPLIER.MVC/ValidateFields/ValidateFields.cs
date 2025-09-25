@@ -9,7 +9,10 @@ namespace COMPANY_SUPPLIER.MVC.ValidateFields
     {
         private static object Error()
         {
-            return new BadRequestObjectResult("Invalid Request. Parameter or incorrectly entered in.");
+            return new BadRequestObjectResult(new
+            {
+                message = "Invalid Request. Parameter or incorrectly entered in."
+            });
         }
 
         public static object ValidateCompanyDto(object obj)

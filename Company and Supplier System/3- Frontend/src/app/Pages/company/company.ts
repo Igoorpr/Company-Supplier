@@ -47,16 +47,19 @@ export class Company implements OnInit {
   }
   
   saveCompany() {
-    this.companyService.postCompany(this.newCompany).subscribe(
-      {
-        next: result => this.showMessage('This request was successfully.', 'success'),
-        error: error => this.showMessage(error, 'error')
+    this.companyService.postCompany(this.newCompany).subscribe({
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
       }
-    )
-    this.closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
+    });
   }
 
   openModalUpdate(companyCnpj: string, companyName: string, companyPostalCode: string, companyState: string) {
@@ -70,16 +73,19 @@ export class Company implements OnInit {
   }
 
   UpdateCompany() {
-    this.companyService.putCompany(this.newCompanyUpdate).subscribe(
-      {
-        next: result => this.showMessage('This request was successfully.', 'success'),
-        error: error => this.showMessage(error, 'error')
+    this.companyService.putCompany(this.newCompanyUpdate).subscribe({
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
       }
-    )
-    this.closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
+    });
   }
 
   removeCompany(companyCnpj: string) {  
@@ -87,12 +93,18 @@ export class Company implements OnInit {
         companyCnpj: companyCnpj
       }; 
     this.companyService.DeleteCompany(company).subscribe({
-      next: result => this.showMessage('This request was successfully.', 'success'),
-      error: error => this.showMessage(error, 'error')
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
+      }
     });
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
   }
 
   openModal() {

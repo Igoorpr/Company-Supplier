@@ -48,7 +48,7 @@
           <td>{{ supplier.supplier_Birthdate }}</td>
           <td>
             <div class="header-controls-delete">
-              <button (click)="removeSupplier(supplier.company_Cnpj, supplier.supplier_Cpf_Cnpj)">X</button>
+              <button (click)="removeCompanySupplier(supplier.company_Cnpj, supplier.supplier_Cpf_Cnpj)">X</button>
             </div>    
           </td>
         </tr>
@@ -60,7 +60,7 @@
   <div class="modal" *ngIf="modalOpen">
     <div class="modal-content">
       <h1>Add Supplier</h1>
-      <form (ngSubmit)="saveSupplier()">
+      <form (ngSubmit)="saveCompanySupplier()">
         <div class="form-grid">
           <input type="text" [(ngModel)]="newSupplier.company_Cnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
           <input type="text" [(ngModel)]="newSupplier.cpfCnpj" name="cpfCnpj" placeholder="CPF/CNPJ" required />         

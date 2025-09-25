@@ -44,27 +44,30 @@ export class CompanySupplier implements OnInit {
      );
   }
   
-  saveSupplier() {
-    this.companySupplierService.postCompanySupplier(this.newSupplier).subscribe(
-      {
-        next: result => this.showMessage('This request was successfully.', 'success'),
-        error: error => this.showMessage(error, 'error')
+  saveCompanySupplier() {
+    this.companySupplierService.postCompanySupplier(this.newSupplier).subscribe({
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
       }
-    )
-    this.closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
+    });
   }
 
-  removeSupplier(companyCnpj: string, supplier_Cpf_Cnpj : string) {  
+  removeCompanySupplier(companyCnpj: string, supplier_Cpf_Cnpj : string) {  
       const supplier: ICompanySupplier = {
         company_Cnpj: companyCnpj,
         cpfCnpj: supplier_Cpf_Cnpj,
         name: ''
       }; 
     this.companySupplierService.DeleteCompanySupplier(supplier).subscribe({
-      next: result => this.showMessage('This request was successfully.', 'success'),
+      next: result => this.showMessage(result, 'success'),
       error: error => this.showMessage(error, 'error')
     });
     setTimeout(() => {

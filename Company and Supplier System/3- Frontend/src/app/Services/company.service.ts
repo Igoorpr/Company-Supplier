@@ -21,13 +21,13 @@ export class CompanyService extends BaseService {
     super()
   }
 
-  public postCompany(company: ICompany): Observable<ICompany> {
+  public postCompany(company: ICompany): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Company`;
   
     return this.http.post<IReturn>(str_Url, company, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      map((response: IReturn): ICompany => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -42,8 +42,7 @@ export class CompanyService extends BaseService {
       companyCnpj: Company_Cnpj_Name
     };
 
-    return this.http.get<IReturn>(str_Url, { params }).pipe(
-      map((data: IReturn): ICompany[] => data.data),
+    return this.http.get<ICompany[]>(str_Url, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -51,13 +50,13 @@ export class CompanyService extends BaseService {
     );
   }
 
-  public putCompany(company: ICompany): Observable<ICompany> {
+  public putCompany(company: ICompany): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Company`;
   
     return this.http.put<IReturn>(str_Url, company, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      map((response: IReturn): ICompany => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -65,14 +64,14 @@ export class CompanyService extends BaseService {
     );
   }
 
-  public DeleteCompany(company: ICompanyKey): Observable<ICompanyKey> {
+  public DeleteCompany(company: ICompanyKey): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Company`;
   
     return this.http.delete<IReturn>(str_Url, {
       headers: { 'Content-Type': 'application/json' },
       body: company
     }).pipe(
-      map((response: IReturn): ICompanyKey => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));

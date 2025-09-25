@@ -20,13 +20,13 @@ export class SupplierService extends BaseService {
     super()
   }
 
-  public postSupplier(supplier: ISupplier): Observable<ISupplier> {
+  public postSupplier(supplier: ISupplier): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Supplier`;
 
     return this.http.post<IReturn>(str_Url, supplier, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      map((response: IReturn): ISupplier => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -41,8 +41,7 @@ export class SupplierService extends BaseService {
       supplierCpfCnpj: Supplier_Cpf_Cnpj
     };
 
-    return this.http.get<IReturn>(str_Url, { params }).pipe(
-      map((data: IReturn): ISupplier[] => data.data),
+    return this.http.get<ISupplier[]>(str_Url, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -50,13 +49,13 @@ export class SupplierService extends BaseService {
     );
   }
 
-  public putSupplier(supplier: ISupplier): Observable<ISupplier> {
+  public putSupplier(supplier: ISupplier): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Supplier`;
   
     return this.http.put<IReturn>(str_Url, supplier, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      map((response: IReturn): ISupplier => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -64,14 +63,14 @@ export class SupplierService extends BaseService {
     );
   }
 
-  public DeleteSupplier(supplier: ISupplierKey): Observable<ISupplierKey> {
+  public DeleteSupplier(supplier: ISupplierKey): Observable<string> {
     const str_Url = `${this.BaseUrl()}/Supplier`;
   
     return this.http.delete<IReturn>(str_Url, {
       headers: { 'Content-Type': 'application/json' },
       body: supplier
     }).pipe(
-      map((response: IReturn): ISupplierKey => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));

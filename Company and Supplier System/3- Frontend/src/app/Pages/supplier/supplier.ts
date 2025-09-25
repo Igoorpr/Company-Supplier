@@ -47,16 +47,19 @@ export class Supplier implements OnInit {
   }
   
   saveSupplier() {
-    this.supplierService.postSupplier(this.newSupplier).subscribe(
-      {
-        next: result => this.showMessage('This request was successfully.', 'success'),
-        error: error => this.showMessage(error, 'error')
+    this.supplierService.postSupplier(this.newSupplier).subscribe({
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
       }
-    )
-    this.closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
+    });
   }
 
   openModalUpdate(supplierCpfCnpj: string, supplierName: string, supplierType: string, supplierEmail: string | null, supplierPostalCode: string, supplierRG: string | null, supplierBirthDate: Date | null) {
@@ -73,16 +76,19 @@ export class Supplier implements OnInit {
   }
 
   UpdateSupplier() {
-    this.supplierService.putSupplier(this.newSupplierUpdate).subscribe(
-      {
-        next: result => this.showMessage('This request was successfully.', 'success'),
-        error: error => this.showMessage(error, 'error')
+    this.supplierService.putSupplier(this.newSupplierUpdate).subscribe({
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
       }
-    )
-    this.closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
+    });
   }
 
   removeSupplier(supplierCpfCnpj: string) {  
@@ -90,12 +96,18 @@ export class Supplier implements OnInit {
         supplierCpfCnpj: supplierCpfCnpj
       }; 
     this.supplierService.DeleteSupplier(supplier).subscribe({
-      next: result => this.showMessage('This request was successfully.', 'success'),
-      error: error => this.showMessage(error, 'error')
+      next: result => {
+        this.showMessage(result, 'success');
+        this.closeModal();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      error: error => {
+        this.showMessage(error, 'error')
+      }
     });
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000); 
   }
 
   openModal() {

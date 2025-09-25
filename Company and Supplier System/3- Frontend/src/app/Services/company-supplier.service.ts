@@ -20,13 +20,13 @@ export class CompanySupplierService extends BaseService {
     super()
   }
 
-  public postCompanySupplier(companySupplier: ICompanySupplier): Observable<ICompanySupplier> {
+  public postCompanySupplier(companySupplier: ICompanySupplier): Observable<string> {
     const str_Url = `${this.BaseUrl()}/CompanySupplier`;
   
     return this.http.post<IReturn>(str_Url, companySupplier, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      map((response: IReturn): ICompanySupplier => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -50,8 +50,7 @@ export class CompanySupplierService extends BaseService {
       name: Name
     };
 
-    return this.http.get<IReturn>(str_Url, { params }).pipe(
-      map((data: IReturn): ICompanySupplierReturn[] => data.data),
+    return this.http.get<ICompanySupplierReturn[]>(str_Url, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
@@ -59,14 +58,14 @@ export class CompanySupplierService extends BaseService {
     );
   }
 
-  public DeleteCompanySupplier(companySupplier: ICompanySupplier): Observable<ICompanySupplier> {
+  public DeleteCompanySupplier(companySupplier: ICompanySupplier): Observable<string> {
     const str_Url = `${this.BaseUrl()}/CompanySupplier`;
   
     return this.http.delete<IReturn>(str_Url, {
       headers: { 'Content-Type': 'application/json' },
       body: companySupplier
     }).pipe(
-      map((response: IReturn): ICompanySupplier => response.data),
+      map((response: IReturn) => response.message),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
