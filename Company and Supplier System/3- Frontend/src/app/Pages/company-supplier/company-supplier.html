@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="header">
+    <h1>Company-Supplier Management</h1>
+    <div class="header-controls">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search..." />
+      <button (click)="search()">Search</button>
+      <button (click)="search()">Add Company</button>
+      <button (click)="search()">Add Supplier</button>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-header">
+      <h2>Supplier List</h2>
+      <button (click)="openModal()">Add</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Company CNPJ</th>
+          <th>Company Name</th>
+          <th>Company State</th>
+          <th>Supplier Cpf Cnpj</th>
+          <th>Supplier Name</th>
+          <th>Supplier Type</th>
+          <th>Supplier Rg</th>
+          <th>Supplier Email</th>
+          <th>Supplier Birthdate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supplier of suppliers; let i = index">
+          <td>{{ supplier.company_Cnpj }}</td>
+          <td>{{ supplier.company_Name }}</td>
+          <td>{{ supplier.company_State }}</td>
+          <td>{{ supplier.supplier_Cpf_Cnpj }}</td>
+          <td>{{ supplier.supplier_Name }}</td>
+          <td>{{ supplier.supplier_Type }}</td>
+          <td>{{ supplier.supplier_Rg }}</td>
+          <td>{{ supplier.supplier_Email }}</td>
+          <td>{{ supplier.supplier_Birthdate }}</td>
+          <td>
+            <button (click)="removeSupplier(supplier.company_Cnpj, supplier.supplier_Cpf_Cnpj)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="modalOpen">
+    <div class="modal-content">
+      <h3>Add Supplier</h3>
+      <form (ngSubmit)="saveSupplier()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newSupplier.company_Cnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
+          <input type="text" [(ngModel)]="newSupplier.cpfCnpj" name="cpfCnpj" placeholder="CPF/CNPJ" required />         
+        </div>
+
+        <div *ngIf="messageText" [ngClass]="{
+          'msg-error': messageType === 'error',
+          'msg-success': messageType === 'success',
+          'msg-info': messageType === 'info'
+          }" class="message-box">
+          {{ messageText }}
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="closeModal()">Cancel</button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
