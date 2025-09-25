@@ -90,10 +90,14 @@ export class CompanySupplier implements OnInit {
          this.suppliers = result;
        },
        error => {
+         this.suppliers = []
          this.showMessage(error, 'error')
+         setTimeout(() => {
+            window.location.reload();
+         }, 2000); 
        }
      );
-    this.searchTerm = ''
+    this.searchTerm = ''    
  }
 
  showMessage(text: string, type: 'error' | 'success' | 'info') {

@@ -135,7 +135,7 @@ export class Supplier implements OnInit {
   }
 
   AddCompany() {
-    this.router.navigateByUrl('/Company')
+    this.router.navigateByUrl('/company')
   }
 }
 

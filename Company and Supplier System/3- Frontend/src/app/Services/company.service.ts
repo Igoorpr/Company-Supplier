@@ -9,6 +9,7 @@ import { BaseService } from './base.service';
 import { IReturn } from '../Interfaces/return.interface';
 import { ICompany } from '../Interfaces/company.interface';
 import { ICompanyKey } from '../Interfaces/companyKey.interface';
+import { IReturnObject } from '../Interfaces/return-object.interface';
 
 
 @Injectable({
@@ -42,7 +43,8 @@ export class CompanyService extends BaseService {
       companyCnpj: Company_Cnpj_Name
     };
 
-    return this.http.get<ICompany[]>(str_Url, { params }).pipe(
+    return this.http.get<IReturnObject>(str_Url, { params }).pipe(
+      map((data: IReturnObject) => Array.isArray(data.data) ? data.data : []),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));

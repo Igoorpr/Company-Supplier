@@ -9,6 +9,7 @@ import { BaseService } from './base.service';
 import { IReturn } from '../Interfaces/return.interface';
 import { ISupplier } from '../Interfaces/supplier.interface';
 import { ISupplierKey } from '../Interfaces/supplierKey.interface';
+import { IReturnObject } from '../Interfaces/return-object.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,8 @@ export class SupplierService extends BaseService {
       supplierCpfCnpj: Supplier_Cpf_Cnpj
     };
 
-    return this.http.get<ISupplier[]>(str_Url, { params }).pipe(
+    return this.http.get<IReturnObject>(str_Url, { params }).pipe(
+      map((data: IReturnObject) => Array.isArray(data.data) ? data.data : []),
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));
