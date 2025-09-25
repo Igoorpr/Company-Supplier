@@ -21,7 +21,7 @@ namespace COMPANY_SUPPLIER.APP.Services
             await _companyservice.SaveCompany(companydto.CreateModel());
         }
 
-        public async Task<object> FindCompany(CompanyKeyDTO companykeydto)
+        public async Task<IEnumerable<object>> FindCompany(CompanyKeyDTO companykeydto)
         {
             return await _companyservice.FindCompany(companykeydto.CreateModel());
         }

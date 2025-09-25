@@ -1,1 +1,65 @@
-<p>company works!</p>
+<div class="container">
+  <div class="header">
+    <h1>Company Management</h1>
+    <div class="header-controls">
+      <button (click)="BackCompanySupplier()">Back</button>
+      <button (click)="AddSupplier()">Add Supplier</button>
+    </div>
+  </div>
+
+  <div *ngIf="messageText" class="alert" [ngClass]="messageType">
+    {{ messageText }}
+  </div>
+
+  <div class="box">
+    <div class="box-header">
+      <h2>Company List</h2>
+      <div class="header-controls">
+        <button (click)="openModal()">Add</button>
+      </div>     
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Company CNPJ</th>
+          <th>Company Name</th>
+          <th>Company Postal Code</th>
+          <th>Company State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companyies; let i = index">
+          <td>{{ company.companyCnpj }}</td>
+          <td>{{ company.companyName }}</td>
+          <td>{{ company.companyPostalCode }}</td>
+          <td>{{ company.companyState }}</td>
+          <td>
+            <div class="header-controls-delete">
+              <button (click)="removeCompany(company.companyCnpj)">X</button>
+            </div>    
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="modalOpen">
+    <div class="modal-content">
+      <h3>Add Company</h3>
+      <form (ngSubmit)="saveCompany()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newCompany.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
+          <input type="text" [(ngModel)]="newCompany.companyName" name="company_Name" placeholder="Company Name" required />     
+          <input type="text" [(ngModel)]="newCompany.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required />
+          <input type="text" [(ngModel)]="newCompany.companyState" name="company_State" placeholder="Company State" required />    
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

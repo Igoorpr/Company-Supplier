@@ -27,7 +27,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Company = await _companyRepository.FindCompany(company.CompanyCnpj.ToString());
 
             // Company already registered in the database(!= null)
-            if (obj_Company != null)
+            if (obj_Company == null || !obj_Company.Any())
             {
                 throw new NullReferenceException("Data already existing in the base.");
             }
@@ -35,17 +35,24 @@ namespace COMPANY_SUPPLIER.DOM.Services
             await _companyRepository.SaveCompany(_mapper.Map<COMPANY>(company));
         }
 
-        public async Task<CompanyModel> FindCompany(CompanyModel company)
+        public async Task<IEnumerable<CompanyModel>> FindCompany(CompanyModel company)
         {
             var obj_Company = await _companyRepository.FindCompany(company.CompanyCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Company == null)
+            if ((obj_Company == null) || (!obj_Company.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }
 
-            return new CompanyModel(obj_Company.Company_Cnpj, obj_Company.Company_Name, obj_Company.Company_PostalCode, obj_Company.Company_State);
+            var lst_Company = new List<CompanyModel>();
+
+            foreach (var search in obj_Company.ToList())
+            {
+                lst_Company.Add(new CompanyModel(search.Company_Cnpj.Trim(), search.Company_Name.Trim(), search.Company_PostalCode.Trim(), search.Company_State.Trim()));
+            }
+
+            return lst_Company;
         }
 
         public async Task UpdateCompany(CompanyModel company)

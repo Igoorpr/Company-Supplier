@@ -44,20 +44,5 @@ namespace COMPANY_SUPPLIER.INF.Repositories
                 throw new Exception(ex.Message);
             }
         }
-
-        protected async Task<T> QueryFirst<T>(string procedure, DynamicParameters parameters)
-        {
-            try
-            {
-                using (IDbConnection connection = new SqlConnection(ConnectionStringBase()))
-                {
-                    return await connection.QueryFirstOrDefaultAsync<T>(procedure, parameters, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
     }
 }

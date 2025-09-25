@@ -41,17 +41,25 @@ namespace COMPANY_SUPPLIER.DOM.Services
             await _supplierRepository.SaveSupplier(_mapper.Map<SUPPLIER>(supplier));
         }
 
-        public async Task<SupplierModel> FindSupplier(SupplierModel supplier)
+        public async Task<IEnumerable<SupplierModel>> FindSupplier(SupplierModel supplier)
         {
             var obj_Supplier = await _supplierRepository.FindSupplier(supplier.SupplierCpfCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Supplier == null)
+            if ((obj_Supplier == null) || (!obj_Supplier.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }
 
-            return new SupplierModel(obj_Supplier.Supplier_Cpf_Cnpj, obj_Supplier.Supplier_Name, obj_Supplier.Supplier_Type, obj_Supplier.Supplier_Email, obj_Supplier.Supplier_PostalCode, obj_Supplier.Supplier_RG, obj_Supplier.Supplier_BirthDate);
+            var lst_Supplier = new List<SupplierModel>();
+
+            foreach (var search in obj_Supplier.ToList())
+            {
+                lst_Supplier.Add(new SupplierModel(search.Supplier_Cpf_Cnpj?.Trim(), search.Supplier_Name?.Trim(), search.Supplier_Type?.Trim(),
+                                                       search.Supplier_Email?.Trim(), search.Supplier_PostalCode?.Trim(), search.Supplier_RG?.Trim(), search.Supplier_BirthDate));
+            }
+
+            return lst_Supplier;
         }
 
         public async Task UpdateSupplier(SupplierModel supplier)

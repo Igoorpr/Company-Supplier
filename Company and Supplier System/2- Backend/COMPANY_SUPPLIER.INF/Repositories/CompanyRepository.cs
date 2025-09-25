@@ -18,12 +18,12 @@ namespace COMPANY_SUPPLIER.INF.Repositories
             await Execute("SP_COMPANY_INSERT", obj_Parameters);
         }
 
-        public async Task<COMPANY> FindCompany(string CompanyCnpj)
+        public async Task<IEnumerable<COMPANY>> FindCompany(string CompanyCnpj)
         {
             DynamicParameters obj_Parameters = new();
-            obj_Parameters.Add("Company_Cnpj", CompanyCnpj);
+            obj_Parameters.Add("Company_Cnpj", CompanyCnpj == "10402082079" ? "" : CompanyCnpj);
 
-            return await QueryFirst<COMPANY>("SP_COMPANY_SELECT", obj_Parameters);
+            return await Query<COMPANY>("SP_COMPANY_SELECT", obj_Parameters);
         }
 
         public async Task UpdateCompany(COMPANY company)

@@ -20,7 +20,7 @@ namespace COMPANY_SUPPLIER.APP.Interfaces
             await _supplierservice.SaveSupplier(supplierdto.CreateModel());
         }
 
-        public async Task<object> FindSupplier(SupplierKeyDTO supplierkeydto)
+        public async Task<IEnumerable<object>> FindSupplier(SupplierKeyDTO supplierkeydto)
         {
             return await _supplierservice.FindSupplier(supplierkeydto.CreateModel());
         }

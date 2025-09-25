@@ -14,7 +14,7 @@ namespace COMPANY_SUPPLIER.APP.Interfaces
         /// <summary>
         /// 
         /// </summary>
-        Task<object> FindSupplier(SupplierKeyDTO supplierkeydto);
+        Task<IEnumerable<object>> FindSupplier(SupplierKeyDTO supplierkeydto);
         /// <summary>
         /// 
         /// </summary>

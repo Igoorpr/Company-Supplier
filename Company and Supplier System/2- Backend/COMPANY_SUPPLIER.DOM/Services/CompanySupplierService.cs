@@ -29,8 +29,8 @@ namespace COMPANY_SUPPLIER.DOM.Services
             }
 
             //Check if the company and the supplier exist.
-            var obj_Company = await _companyRepository.FindCompany(companysupplier.Company_Cnpj.ToString());
-            var obj_Supplier = await _supplierRepository.FindSupplier(companysupplier.CpfCnpj.ToString());
+            var obj_Company = (await _companyRepository.FindCompany(companysupplier.Company_Cnpj.ToString())).FirstOrDefault();
+            var obj_Supplier = (await _supplierRepository.FindSupplier(companysupplier.CpfCnpj.ToString())).FirstOrDefault();
 
             if (obj_Company == null || obj_Supplier == null)
             {
@@ -51,11 +51,6 @@ namespace COMPANY_SUPPLIER.DOM.Services
 
         public async Task<IEnumerable<CompanySupplierModel>> FindCompanySupplier(CompanySupplierModel companysupplier)
         {
-            if (string.IsNullOrEmpty(companysupplier.CpfCnpj) && string.IsNullOrEmpty(companysupplier.Name) && string.IsNullOrEmpty(companysupplier.Company_Cnpj))
-            {
-                throw new ValidationException("CNPJ or CPF is invalid.");
-            }
-
             if (string.IsNullOrEmpty(companysupplier.CpfCnpj))
             {
                 companysupplier.CpfCnpj = companysupplier.Company_Cnpj;
@@ -75,7 +70,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             foreach (var search in obj_Company.ToList())
             {
                 lst_Company.Add(new CompanySupplierModel(search.Company_Cnpj?.Trim(), search.Company_Name?.Trim(), search.Company_State?.Trim(), search.Supplier_Cpf_Cnpj?.Trim(), search.Supplier_Name?.Trim(), search.Supplier_Type?.Trim(),
-                                                       search.Supplier_RG?.Trim(), search.Supplier_Email?.Trim(), search.Supplier_BirthDate));
+                                                       search.Supplier_RG?.Trim(), search.Supplier_Email?.Trim(), search.Supplier_BirthDate.HasValue? search.Supplier_BirthDate.Value.ToString("yyyy-MM-dd") : null));
             }
 
             return lst_Company;

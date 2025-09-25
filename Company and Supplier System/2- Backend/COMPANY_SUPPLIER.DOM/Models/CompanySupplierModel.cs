@@ -12,7 +12,7 @@
         public string? Supplier_Type { get; set; }
         public string? Supplier_Rg { get; set; }
         public string? Supplier_Email { get; set; }
-        public DateTime? Supplier_Birthdate { get; set; }
+        public string? Supplier_Birthdate { get; set; }
 
         public CompanySupplierModel(string? company_cnpj, string cpfcnpj, string name)
         {
@@ -22,7 +22,7 @@
 
         public CompanySupplierModel(string? companyCnpj, string? companyName, string? companyState,
                            string? supplierCpfCnpj, string? supplierName, string? supplierType,
-                           string? supplierRg, string? supplierEmail, DateTime? supplierBirthdate)
+                           string? supplierRg, string? supplierEmail, string? supplierBirthdate)
         {
             Company_Cnpj = companyCnpj;
             Company_Name = companyName;

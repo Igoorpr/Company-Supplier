@@ -52,7 +52,9 @@ export class CompanySupplier implements OnInit {
       }
     )
     this.closeModal();
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); 
   }
 
   removeSupplier(companyCnpj: string, supplier_Cpf_Cnpj : string) {  
@@ -65,7 +67,9 @@ export class CompanySupplier implements OnInit {
       next: result => this.showMessage('This request was successfully.', 'success'),
       error: error => this.showMessage(error, 'error')
     });
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); 
   }
 
   openModal() {
@@ -86,10 +90,24 @@ export class CompanySupplier implements OnInit {
          this.showMessage(error, 'error')
        }
      );
+    this.searchTerm = ''
  }
 
  showMessage(text: string, type: 'error' | 'success' | 'info') {
     this.messageText = text;
     this.messageType = type;
+
+    setTimeout(() => {
+      this.messageText = '';
+      this.messageType = '';
+    }, 3000);
+  }
+
+  AddCompany() {
+    this.router.navigateByUrl('/company')
+  }
+
+  AddSupplier() {
+    this.router.navigateByUrl('/supplier')
   }
 }
