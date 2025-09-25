@@ -1,1 +1,98 @@
-<p>supplier works!</p>
+<div class="container">
+  <div class="header">
+    <h1>Supplier Management</h1>
+    <div class="header-controls">
+      <button (click)="BackCompanySupplier()">Back</button>
+      <button (click)="AddCompany()">Add Company</button>
+    </div>
+  </div>
+
+  <div *ngIf="messageText" class="alert" [ngClass]="messageType">
+    {{ messageText }}
+  </div>
+
+  <div class="box">
+    <div class="box-header">
+      <h2>Company List</h2>
+      <div class="header-controls">
+        <button (click)="openModal()">Add</button>
+      </div>     
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Supplier CPF/CNPJ</th>
+          <th>Supplier Name</th>
+          <th>Supplier Type</th>
+          <th>Supplier E-mail</th>
+          <th>Supplier Postal Code</th>
+          <th>Supplier RG</th>
+          <th>Supplier BirthDate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supplier of suppliers; let i = index">
+          <td>{{ supplier.supplierCpfCnpj }}</td>
+          <td>{{ supplier.supplierName }}</td>
+          <td>{{ supplier.supplierType }}</td>
+          <td>{{ supplier.supplierEmail }}</td>
+          <td>{{ supplier.supplierPostalCode }}</td>
+          <td>{{ supplier.supplierRG }}</td>
+          <td>{{ supplier.supplierBirthDate }}</td>
+          <td>
+            <div class="header-controls-update">
+              <button (click)="openModalUpdate(supplier.supplierCpfCnpj, supplier.supplierName, supplier.supplierType, supplier.supplierEmail, supplier.supplierPostalCode, supplier.supplierRG, supplier.supplierBirthDate)">U</button>
+            </div> 
+            <div class="header-controls-delete">
+              <button (click)="removeSupplier(supplier.supplierCpfCnpj)">X</button>
+            </div> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="modalOpen">
+    <div class="modal-content">
+      <h1>Add Company</h1>
+      <form (ngSubmit)="saveSupplier()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newSupplier.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required />
+          <input type="text" [(ngModel)]="newSupplier.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
+          <input type="text" [(ngModel)]="newSupplier.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
+          <input type="text" [(ngModel)]="newSupplier.SupplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
+          <input type="text" [(ngModel)]="newSupplier.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
+          <input type="text" [(ngModel)]="newSupplier.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
+          <input type="text" [(ngModel)]="newSupplier.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+   <!-- Modal Update--> 
+  </div>
+    <div class="modal" *ngIf="modalOpenUpdate">
+    <div class="modal-content">
+      <h1>Update Company</h1>
+      <form (ngSubmit)="UpdateSupplier()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required disabled />
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
+          <input type="text" [(ngModel)]="newSupplierUpdate.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
+          <input type="text" [(ngModel)]="newSupplierUpdate.SupplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-update">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

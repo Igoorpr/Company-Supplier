@@ -22,8 +22,10 @@ import { ICompanyKey } from '../../Interfaces/companyKey.interface';
 export class Company implements OnInit {
   public companyies: ICompany[] = [];
   modalOpen = false;
+  modalOpenUpdate = false;
   searchTerm = '';
   newCompany: any = {};
+  newCompanyUpdate: any = {};
   messageText: string = '';
   messageType: 'error' | 'success' | 'info' | '' = ''; 
 
@@ -57,6 +59,29 @@ export class Company implements OnInit {
     }, 2000); 
   }
 
+  openModalUpdate(companyCnpj: string, companyName: string, companyPostalCode: string, companyState: string) {
+    this.newCompanyUpdate = {
+      companyCnpj: companyCnpj,
+      companyName: companyName,
+      companyPostalCode: companyPostalCode,
+      companyState: companyState
+    };
+    this.modalOpenUpdate = true;
+  }
+
+  UpdateCompany() {
+    this.companyService.putCompany(this.newCompanyUpdate).subscribe(
+      {
+        next: result => this.showMessage('This request was successfully.', 'success'),
+        error: error => this.showMessage(error, 'error')
+      }
+    )
+    this.closeModal();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); 
+  }
+
   removeCompany(companyCnpj: string) {  
       const company: ICompanyKey = {
         companyCnpj: companyCnpj
@@ -77,6 +102,7 @@ export class Company implements OnInit {
 
   closeModal() {
     this.modalOpen = false;
+    this.modalOpenUpdate = false;
   }
 
  showMessage(text: string, type: 'error' | 'success' | 'info') {

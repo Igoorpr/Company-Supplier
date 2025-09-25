@@ -93,7 +93,7 @@ namespace COMPANY_SUPPLIER.MVC.Controllers
             {
                 return BadRequest(new
                 {
-                    mensagem = ex.Message
+                    message = ex.Message
                 });
             }
             // Data not found
@@ -143,7 +143,7 @@ namespace COMPANY_SUPPLIER.MVC.Controllers
             {
                 return BadRequest(new
                 {
-                    mensagem = ex.Message
+                    message = ex.Message
                 });
             }
             // Data not found
@@ -193,7 +193,7 @@ namespace COMPANY_SUPPLIER.MVC.Controllers
             {
                 return BadRequest(new
                 {
-                    mensagem = ex.Message
+                    message = ex.Message
                 });
             }
             // Data not found

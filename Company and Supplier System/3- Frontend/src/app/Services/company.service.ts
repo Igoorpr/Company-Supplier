@@ -24,9 +24,6 @@ export class CompanyService extends BaseService {
   public postCompany(company: ICompany): Observable<ICompany> {
     const str_Url = `${this.BaseUrl()}/Company`;
   
-    console.log(company)
-
-
     return this.http.post<IReturn>(str_Url, company, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(

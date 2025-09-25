@@ -27,7 +27,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Company = await _companyRepository.FindCompany(company.CompanyCnpj.ToString());
 
             // Company already registered in the database(!= null)
-            if (obj_Company == null || !obj_Company.Any())
+            if (obj_Company.Count() > 0)
             {
                 throw new NullReferenceException("Data already existing in the base.");
             }
@@ -60,7 +60,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Company = await _companyRepository.FindCompany(company.CompanyCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Company == null)
+            if ((obj_Company == null) || (!obj_Company.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }
@@ -73,7 +73,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Company = await _companyRepository.FindCompany(company.CompanyCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Company == null)
+            if ((obj_Company == null) || (!obj_Company.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }

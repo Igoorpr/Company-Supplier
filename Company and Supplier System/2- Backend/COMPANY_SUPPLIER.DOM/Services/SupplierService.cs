@@ -33,7 +33,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Supplier = await _supplierRepository.FindSupplier(supplier.SupplierCpfCnpj.ToString());
 
             // Supplier already registered in the database(!= null)
-            if (obj_Supplier != null)
+            if (obj_Supplier.Count() > 0)
             {
                 throw new NullReferenceException("Data already existing in the base.");
             }
@@ -67,7 +67,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Supplier = await _supplierRepository.FindSupplier(supplier.SupplierCpfCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Supplier == null)
+            if ((obj_Supplier == null) || (!obj_Supplier.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }
@@ -80,7 +80,7 @@ namespace COMPANY_SUPPLIER.DOM.Services
             var obj_Supplier = await _supplierRepository.FindSupplier(supplier.SupplierCpfCnpj.ToString());
 
             // Did not find (== null)
-            if (obj_Supplier == null)
+            if ((obj_Supplier == null) || (!obj_Supplier.Any()))
             {
                 throw new NullReferenceException("Not found.");
             }

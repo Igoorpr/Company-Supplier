@@ -35,9 +35,12 @@
           <td>{{ company.companyPostalCode }}</td>
           <td>{{ company.companyState }}</td>
           <td>
+            <div class="header-controls-update">
+              <button (click)="openModalUpdate(company.companyCnpj, company.companyName, company.companyPostalCode, company.companyState)">U</button>
+            </div> 
             <div class="header-controls-delete">
               <button (click)="removeCompany(company.companyCnpj)">X</button>
-            </div>    
+            </div> 
           </td>
         </tr>
       </tbody>
@@ -47,7 +50,7 @@
   <!-- Modal -->
   <div class="modal" *ngIf="modalOpen">
     <div class="modal-content">
-      <h3>Add Company</h3>
+      <h1>Add Company</h1>
       <form (ngSubmit)="saveCompany()">
         <div class="form-grid">
           <input type="text" [(ngModel)]="newCompany.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
@@ -58,6 +61,24 @@
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
           <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+   <!-- Modal Update--> 
+  </div>
+    <div class="modal" *ngIf="modalOpenUpdate">
+    <div class="modal-content">
+      <h1>Update Company</h1>
+      <form (ngSubmit)="UpdateCompany()">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newCompanyUpdate.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required disabled />
+          <input type="text" [(ngModel)]="newCompanyUpdate.companyName" name="company_Name" placeholder="Company Name" required />     
+          <input type="text" [(ngModel)]="newCompanyUpdate.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required />
+          <input type="text" [(ngModel)]="newCompanyUpdate.companyState" name="company_State" placeholder="Company State" required />    
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-update">Update</button>
         </div>
       </form>
     </div>
