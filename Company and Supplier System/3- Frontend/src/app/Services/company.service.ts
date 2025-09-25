@@ -10,6 +10,7 @@ import { IReturn } from '../Interfaces/return.interface';
 import { ICompany } from '../Interfaces/company.interface';
 import { ICompanyKey } from '../Interfaces/companyKey.interface';
 import { IReturnObject } from '../Interfaces/return-object.interface';
+import { ICepReturn } from '../Interfaces/returnCep.interface';
 
 
 @Injectable({
@@ -74,6 +75,17 @@ export class CompanyService extends BaseService {
       body: company
     }).pipe(
       map((response: IReturn) => response.message),
+      catchError((error: HttpErrorResponse) => {
+        const errorMsg = error.error?.message;
+        return throwError(() => new Error(errorMsg));
+      })
+    );
+  }
+
+ public getCep (cep: string): Observable<any> {
+    const str_Url = `https://viacep.com.br/ws/${cep}/json/`;
+
+    return this.http.get<ICepReturn>(str_Url).pipe(
       catchError((error: HttpErrorResponse) => {
         const errorMsg = error.error?.message;
         return throwError(() => new Error(errorMsg));

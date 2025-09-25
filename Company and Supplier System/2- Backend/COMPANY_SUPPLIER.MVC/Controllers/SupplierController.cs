@@ -44,7 +44,7 @@ namespace COMPANY_SUPPLIER.MVC.Controllers
             {
                 return BadRequest(new
                 {
-                    mensagem = ex.Message
+                    message = ex.Message
                 });
             }
             //If the data already exists in the database

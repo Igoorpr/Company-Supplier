@@ -53,10 +53,10 @@
       <h1>Add Company</h1>
       <form (ngSubmit)="saveCompany()">
         <div class="form-grid">
-          <input type="text" [(ngModel)]="newCompany.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
+          <input type="text" maxlength="14" [(ngModel)]="newCompany.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required />
           <input type="text" [(ngModel)]="newCompany.companyName" name="company_Name" placeholder="Company Name" required />     
-          <input type="text" [(ngModel)]="newCompany.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required />
-          <input type="text" [(ngModel)]="newCompany.companyState" name="company_State" placeholder="Company State" required />    
+          <input type="text" maxlength="8" [(ngModel)]="newCompany.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required (ngModelChange)="onPostalCodeChange(newCompany.supplierPostalCode)"/>
+          <input type="text" maxlength="2" [(ngModel)]="newCompany.companyState" name="company_State" placeholder="Company State" required />    
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
@@ -71,10 +71,10 @@
       <h1>Update Company</h1>
       <form (ngSubmit)="UpdateCompany()">
         <div class="form-grid">
-          <input type="text" [(ngModel)]="newCompanyUpdate.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required disabled />
+          <input type="text" maxlength="14" [(ngModel)]="newCompanyUpdate.companyCnpj" name="company_Cnpj" placeholder="Company CNPJ" required disabled />
           <input type="text" [(ngModel)]="newCompanyUpdate.companyName" name="company_Name" placeholder="Company Name" required />     
-          <input type="text" [(ngModel)]="newCompanyUpdate.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required />
-          <input type="text" [(ngModel)]="newCompanyUpdate.companyState" name="company_State" placeholder="Company State" required />    
+          <input type="text" maxlength="8" [(ngModel)]="newCompanyUpdate.companyPostalCode" name="company_PostalCode" placeholder="Company Postal Code" required (ngModelChange)="onPostalCodeChange(newCompanyUpdate.supplierPostalCode)"/>
+          <input type="text" maxlength="2" [(ngModel)]="newCompanyUpdate.companyState" name="company_State" placeholder="Company State" required />    
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>

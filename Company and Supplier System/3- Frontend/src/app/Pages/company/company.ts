@@ -28,6 +28,7 @@ export class Company implements OnInit {
   newCompanyUpdate: any = {};
   messageText: string = '';
   messageType: 'error' | 'success' | 'info' | '' = ''; 
+  postalCodeValidated: boolean = false;
 
   constructor(
       private companyService: CompanyService,
@@ -44,6 +45,7 @@ export class Company implements OnInit {
          this.showMessage(error, 'error')
        }
      );
+     this.postalCodeValidated = false;
   }
   
   saveCompany() {
@@ -133,6 +135,27 @@ export class Company implements OnInit {
 
   AddSupplier() {
     this.router.navigateByUrl('/supplier')
+  }
+
+ onPostalCodeChange(cep: string) {
+    if (cep.length === 8 && !this.postalCodeValidated) {  
+      this.postalCodeValidated = true;  
+      this.searchCep(cep); 
+    }
+  }
+
+  searchCep(cep: string) {        
+    this.companyService.getCep(cep).subscribe({
+      next: (result) => {
+        console.log(result)
+      },
+      error: (error) => {
+        this.showMessage('Cep is invalid.', 'error');
+        this.newCompanyUpdate.supplierPostalCode = ''
+        this.newCompany.supplierPostalCode = ''
+        this.postalCodeValidated = false;
+      }
+    });
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +28,7 @@ export class Supplier implements OnInit {
   newSupplierUpdate: any = {};
   messageText: string = '';
   messageType: 'error' | 'success' | 'info' | '' = ''; 
+  postalCodeValidated: boolean = false;
 
   constructor(
       private supplierService: SupplierService,
@@ -44,6 +45,7 @@ export class Supplier implements OnInit {
          this.showMessage(error, 'error')
        }
      );
+     this.postalCodeValidated = false;
   }
   
   saveSupplier() {
@@ -136,6 +138,46 @@ export class Supplier implements OnInit {
 
   AddCompany() {
     this.router.navigateByUrl('/company')
+  }
+
+  onDateInput(event: any) {
+    let input = event.target.value;
+
+    input = input.replace(/\D/g, '');
+
+    if (input.length > 8) {
+      input = input.substr(0, 8);
+    }
+
+    if (input.length > 4 && input.length <= 6) {
+      input = input.substr(0, 4) + '-' + input.substr(4);
+    } else if (input.length > 6) {
+      input = input.substr(0, 4) + '-' + input.substr(4, 2) + '-' + input.substr(6);
+    }
+
+    event.target.value = input;
+    this.newSupplier.supplierBirthDate = input;
+  }
+
+  onPostalCodeChange(cep: string) {
+    if (cep.length === 8 && !this.postalCodeValidated) {  
+      this.postalCodeValidated = true;  
+      this.searchCep(cep); 
+    }
+  }
+
+  searchCep(cep: string) {        
+    this.supplierService.getCep(cep).subscribe({
+      next: (result) => {
+        console.log(result)
+      },
+      error: (error) => {
+        this.showMessage('Cep is invalid.', 'error');
+        this.newSupplierUpdate.supplierPostalCode = ''
+        this.newSupplier.supplierPostalCode = ''
+        this.postalCodeValidated = false;
+      }
+    });
   }
 }
 

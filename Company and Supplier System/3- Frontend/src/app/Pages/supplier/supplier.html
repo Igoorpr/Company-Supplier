@@ -13,7 +13,7 @@
 
   <div class="box">
     <div class="box-header">
-      <h2>Company List</h2>
+      <h2>Supplier List</h2>
       <div class="header-controls">
         <button (click)="openModal()">Add</button>
       </div>     
@@ -39,7 +39,7 @@
           <td>{{ supplier.supplierEmail }}</td>
           <td>{{ supplier.supplierPostalCode }}</td>
           <td>{{ supplier.supplierRG }}</td>
-          <td>{{ supplier.supplierBirthDate }}</td>
+          <td>{{ supplier.supplierBirthDate | date:'yyyy-MM-dd' }}</td>
           <td>
             <div class="header-controls-update">
               <button (click)="openModalUpdate(supplier.supplierCpfCnpj, supplier.supplierName, supplier.supplierType, supplier.supplierEmail, supplier.supplierPostalCode, supplier.supplierRG, supplier.supplierBirthDate)">U</button>
@@ -59,13 +59,13 @@
       <h1>Add Company</h1>
       <form (ngSubmit)="saveSupplier()">
         <div class="form-grid">
-          <input type="text" [(ngModel)]="newSupplier.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required />
+          <input type="text" maxlength="14"[(ngModel)]="newSupplier.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required />
           <input type="text" [(ngModel)]="newSupplier.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
-          <input type="text" [(ngModel)]="newSupplier.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
+          <input type="text" maxlength="1" [(ngModel)]="newSupplier.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
           <input type="text" [(ngModel)]="newSupplier.SupplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
-          <input type="text" [(ngModel)]="newSupplier.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
+          <input type="text" maxlength="8" [(ngModel)]="newSupplier.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required  (ngModelChange)="onPostalCodeChange(newSupplier.supplierPostalCode)" /> 
           <input type="text" [(ngModel)]="newSupplier.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
-          <input type="text" [(ngModel)]="newSupplier.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
+          <input type="text" maxlength="10" (input)="onDateInput($event)" [(ngModel)]="newSupplier.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
@@ -80,13 +80,13 @@
       <h1>Update Company</h1>
       <form (ngSubmit)="UpdateSupplier()">
         <div class="form-grid">
-          <input type="text" [(ngModel)]="newSupplierUpdate.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required disabled />
+          <input type="text" maxlength="14" [(ngModel)]="newSupplierUpdate.supplierCpfCnpj" name="supplier_Cpf_Cnpj" placeholder="Supplier CPF/CNPJ" required disabled />
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
-          <input type="text" [(ngModel)]="newSupplierUpdate.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
-          <input type="text" [(ngModel)]="newSupplierUpdate.SupplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
-          <input type="text" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
+          <input type="text" maxlength="1" [(ngModel)]="newSupplierUpdate.supplierType" name="supplier_Type" placeholder="Supplier Type" required disabled/>
+          <input type="text" [(ngModel)]="newSupplierUpdate.supplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
+          <input type="text" maxlength="8" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required (ngModelChange)="onPostalCodeChange(newSupplierUpdate.supplierPostalCode)" /> 
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
-          <input type="text" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
+          <input type="text" maxlength="10" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
