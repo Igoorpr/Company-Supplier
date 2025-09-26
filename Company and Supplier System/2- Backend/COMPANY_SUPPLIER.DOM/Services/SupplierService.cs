@@ -26,7 +26,15 @@ namespace COMPANY_SUPPLIER.DOM.Services
             {
                 if (string.IsNullOrEmpty(supplier.SupplierRG) || string.IsNullOrEmpty(supplier.SupplierBirthDate.ToString()))
                 {
-                    throw new ValidationException("RG and date of birth are required for individual suppliers.");
+                    throw new ValidationException("RG and Date of birth are required for individual suppliers.");
+                }
+            }
+
+            if (supplier.SupplierType.ToString() == "J")
+            {
+                if (!string.IsNullOrEmpty(supplier.SupplierRG) || !string.IsNullOrEmpty(supplier.SupplierBirthDate.ToString()))
+                {
+                    throw new ValidationException("Legal type supplier does not have ID and Date of Birth.");
                 }
             }
 
@@ -64,6 +72,22 @@ namespace COMPANY_SUPPLIER.DOM.Services
 
         public async Task UpdateSupplier(SupplierModel supplier)
         {
+            if (supplier.SupplierType.ToString() == "F")
+            {
+                if (string.IsNullOrEmpty(supplier.SupplierRG) || string.IsNullOrEmpty(supplier.SupplierBirthDate.ToString()))
+                {
+                    throw new ValidationException("RG and Date of birth are required for individual suppliers.");
+                }
+            }
+
+            if (supplier.SupplierType.ToString() == "J")
+            {
+                if (!string.IsNullOrEmpty(supplier.SupplierRG) || !string.IsNullOrEmpty(supplier.SupplierBirthDate.ToString()))
+                {
+                    throw new ValidationException("Legal type supplier does not have ID and Date of Birth.");
+                }
+            }
+
             var obj_Supplier = await _supplierRepository.FindSupplier(supplier.SupplierCpfCnpj.ToString());
 
             // Did not find (== null)

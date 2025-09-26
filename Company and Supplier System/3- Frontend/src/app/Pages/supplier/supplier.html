@@ -86,7 +86,7 @@
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
           <input type="text" maxlength="8" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
-          <input type="text" maxlength="10" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
+          <input type="text" maxlength="10" (input)="onDateInput($event)" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
