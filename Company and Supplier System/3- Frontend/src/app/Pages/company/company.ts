@@ -28,7 +28,6 @@ export class Company implements OnInit {
   newCompanyUpdate: any = {};
   messageText: string = '';
   messageType: 'error' | 'success' | 'info' | '' = ''; 
-  postalCodeValidated: boolean = false;
 
   constructor(
       private companyService: CompanyService,
@@ -45,23 +44,31 @@ export class Company implements OnInit {
          this.showMessage(error, 'error')
        }
      );
-     this.postalCodeValidated = false;
   }
   
   saveCompany() {
-    this.companyService.postCompany(this.newCompany).subscribe({
-      next: result => {
-        this.showMessage(result, 'success');
-        this.closeModal();
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      },
-      error: error => {
-        this.showMessage(error, 'error')
+    this.companyService.searchCep(this.newCompany.companyPostalCode).subscribe(
+      isValid => {
+        if (isValid) {
+          this.companyService.postCompany(this.newCompany).subscribe({
+            next: result => {
+              this.showMessage(result, 'success');
+              this.closeModal();
+            
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            },
+            error: error => {
+              this.showMessage(error, 'error')
+            }
+          }); 
+        } else {
+            this.showMessage('Cep invalid.', 'error');
+            this.newCompany.companyPostalCode = ''
+        }
       }
-    });
+    ) 
   }
 
   openModalUpdate(companyCnpj: string, companyName: string, companyPostalCode: string, companyState: string) {
@@ -75,19 +82,28 @@ export class Company implements OnInit {
   }
 
   UpdateCompany() {
-    this.companyService.putCompany(this.newCompanyUpdate).subscribe({
-      next: result => {
-        this.showMessage(result, 'success');
-        this.closeModal();
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      },
-      error: error => {
-        this.showMessage(error, 'error')
+    this.companyService.searchCep(this.newCompanyUpdate.companyPostalCode).subscribe(
+      isValid => {
+        if (isValid) {
+          this.companyService.putCompany(this.newCompanyUpdate).subscribe({
+            next: result => {
+              this.showMessage(result, 'success');
+              this.closeModal();
+            
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            },
+            error: error => {
+              this.showMessage(error, 'error')
+            }
+          });
+        } else {
+            this.showMessage('Cep invalid.', 'error');
+            this.newCompanyUpdate.companyPostalCode = ''
+        }
       }
-    });
+    )   
   }
 
   removeCompany(companyCnpj: string) {  
@@ -135,27 +151,6 @@ export class Company implements OnInit {
 
   AddSupplier() {
     this.router.navigateByUrl('/supplier')
-  }
-
- onPostalCodeChange(cep: string) {
-    if (cep.length === 8 && !this.postalCodeValidated) {  
-      this.postalCodeValidated = true;  
-      this.searchCep(cep); 
-    }
-  }
-
-  searchCep(cep: string) {        
-    this.companyService.getCep(cep).subscribe({
-      next: (result) => {
-        console.log(result)
-      },
-      error: (error) => {
-        this.showMessage('Cep is invalid.', 'error');
-        this.newCompanyUpdate.supplierPostalCode = ''
-        this.newCompany.supplierPostalCode = ''
-        this.postalCodeValidated = false;
-      }
-    });
   }
 }
 

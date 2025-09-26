@@ -63,7 +63,7 @@
           <input type="text" [(ngModel)]="newSupplier.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
           <input type="text" maxlength="1" [(ngModel)]="newSupplier.SupplierType" name="supplier_Type" placeholder="Supplier Type" required />
           <input type="text" [(ngModel)]="newSupplier.SupplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
-          <input type="text" maxlength="8" [(ngModel)]="newSupplier.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required  (ngModelChange)="onPostalCodeChange(newSupplier.supplierPostalCode)" /> 
+          <input type="text" maxlength="8" [(ngModel)]="newSupplier.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
           <input type="text" [(ngModel)]="newSupplier.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
           <input type="text" maxlength="10" (input)="onDateInput($event)" [(ngModel)]="newSupplier.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
         </div>
@@ -84,7 +84,7 @@
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierName" name="supplier_Name" placeholder="Supplier Name" required />     
           <input type="text" maxlength="1" [(ngModel)]="newSupplierUpdate.supplierType" name="supplier_Type" placeholder="Supplier Type" required disabled/>
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierEmail" name="supplier_Email" placeholder="Supplier E-mail" /> 
-          <input type="text" maxlength="8" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required (ngModelChange)="onPostalCodeChange(newSupplierUpdate.supplierPostalCode)" /> 
+          <input type="text" maxlength="8" [(ngModel)]="newSupplierUpdate.supplierPostalCode" name="supplier_Postal_Code" placeholder="Supplier Postal Code" required /> 
           <input type="text" [(ngModel)]="newSupplierUpdate.supplierRG" name="supplier_Rg" placeholder="Supplier RG" /> 
           <input type="text" maxlength="10" [(ngModel)]="newSupplierUpdate.supplierBirthDate" name="supplier_BirthDate" placeholder="Supplier BirthDate" /> 
         </div>

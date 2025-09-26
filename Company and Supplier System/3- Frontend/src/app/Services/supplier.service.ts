@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { BaseService } from './base.service';
@@ -81,13 +81,19 @@ export class SupplierService extends BaseService {
     );
   }
 
-  public getCep (cep: string): Observable<any> {
-    const str_Url = `https://viacep.com.br/ws/${cep}/json/`;
-
+  public searchCep(cep: string): Observable<boolean> {
+    const str_Url = `http://viacep.com.br/ws/${cep}/json/`;
+  
     return this.http.get<ICepReturn>(str_Url).pipe(
-      catchError((error: HttpErrorResponse) => {
-        const errorMsg = error.error?.message;
-        return throwError(() => new Error(errorMsg));
+      map(result => {
+        console.log(result);
+        if ((result as any).erro) {
+          return false;
+        }
+        return true;
+      }),
+      catchError(error => {
+        return of(false); 
       })
     );
   }

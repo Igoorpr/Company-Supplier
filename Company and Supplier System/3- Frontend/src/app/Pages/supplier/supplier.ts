@@ -28,7 +28,6 @@ export class Supplier implements OnInit {
   newSupplierUpdate: any = {};
   messageText: string = '';
   messageType: 'error' | 'success' | 'info' | '' = ''; 
-  postalCodeValidated: boolean = false;
 
   constructor(
       private supplierService: SupplierService,
@@ -45,23 +44,31 @@ export class Supplier implements OnInit {
          this.showMessage(error, 'error')
        }
      );
-     this.postalCodeValidated = false;
   }
   
   saveSupplier() {
-    this.supplierService.postSupplier(this.newSupplier).subscribe({
-      next: result => {
-        this.showMessage(result, 'success');
-        this.closeModal();
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      },
-      error: error => {
-        this.showMessage(error, 'error')
+    this.supplierService.searchCep(this.newSupplier.supplierPostalCode).subscribe(
+      isValid => {
+        if (isValid) {
+          this.supplierService.postSupplier(this.newSupplier).subscribe({
+            next: result => {
+              this.showMessage(result, 'success');
+              this.closeModal();
+            
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            },
+            error: error => {
+              this.showMessage(error, 'error')
+            }
+          });
+        } else {
+            this.showMessage('Cep invalid.', 'error');
+            this.newSupplier.supplierPostalCode = ''
+        }
       }
-    });
+    )
   }
 
   openModalUpdate(supplierCpfCnpj: string, supplierName: string, supplierType: string, supplierEmail: string | null, supplierPostalCode: string, supplierRG: string | null, supplierBirthDate: Date | null) {
@@ -78,19 +85,28 @@ export class Supplier implements OnInit {
   }
 
   UpdateSupplier() {
-    this.supplierService.putSupplier(this.newSupplierUpdate).subscribe({
-      next: result => {
-        this.showMessage(result, 'success');
-        this.closeModal();
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      },
-      error: error => {
-        this.showMessage(error, 'error')
+    this.supplierService.searchCep(this.newSupplierUpdate.supplierPostalCode).subscribe(
+      isValid => {
+        if (isValid) {
+          this.supplierService.putSupplier(this.newSupplierUpdate).subscribe({
+            next: result => {
+              this.showMessage(result, 'success');
+              this.closeModal();
+            
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            },
+            error: error => {
+              this.showMessage(error, 'error')
+            }
+          });
+        } else {
+            this.showMessage('Cep invalid.', 'error');
+            this.newSupplierUpdate.supplierPostalCode = ''
+        }
       }
-    });
+    )
   }
 
   removeSupplier(supplierCpfCnpj: string) {  
@@ -157,27 +173,6 @@ export class Supplier implements OnInit {
 
     event.target.value = input;
     this.newSupplier.supplierBirthDate = input;
-  }
-
-  onPostalCodeChange(cep: string) {
-    if (cep.length === 8 && !this.postalCodeValidated) {  
-      this.postalCodeValidated = true;  
-      this.searchCep(cep); 
-    }
-  }
-
-  searchCep(cep: string) {        
-    this.supplierService.getCep(cep).subscribe({
-      next: (result) => {
-        console.log(result)
-      },
-      error: (error) => {
-        this.showMessage('Cep is invalid.', 'error');
-        this.newSupplierUpdate.supplierPostalCode = ''
-        this.newSupplier.supplierPostalCode = ''
-        this.postalCodeValidated = false;
-      }
-    });
   }
 }
 
