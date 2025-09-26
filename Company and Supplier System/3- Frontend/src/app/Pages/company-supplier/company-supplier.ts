@@ -58,6 +58,8 @@ export class CompanySupplier implements OnInit {
         this.showMessage(error, 'error')
       }
     });
+    this.newSupplier.company_Cnpj = ''
+    this.newSupplier.cpfCnpj = ''
   }
 
   removeCompanySupplier(companyCnpj: string, supplier_Cpf_Cnpj : string) {  

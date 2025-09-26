@@ -34,16 +34,27 @@ namespace COMPANY_SUPPLIER.DOM.Services
 
             if (obj_Company == null || obj_Supplier == null)
             {
-                throw new NullReferenceException("Not found.");
+                throw new NullReferenceException("Supplier or Company are not found.");
+            }
+
+            var obj_CompanyExists = await _companySupplierRepository.FindCompanySupplier(companysupplier.CpfCnpj, companysupplier.Name);
+
+            // Did not find (== null)
+            if ((obj_CompanyExists.Any(c => c.Company_Cnpj == obj_Company.Company_Cnpj) && (obj_CompanyExists.Any(c => c.Supplier_Cpf_Cnpj == obj_Supplier.Supplier_Cpf_Cnpj))))
+            {
+                throw new NullReferenceException("Supplier and Company already registered.");
             }
 
             //Age Supplier
-            if (obj_Supplier.Supplier_Type.ToString() == "F") Age = CalculateAge(obj_Supplier.Supplier_BirthDate ?? DateTime.Now);
-
-            //If the company is based in Paraná, it is not allowed to register an individual supplier who is underage.
-            if (obj_Company.Company_State == "PR" && Age < 18)
+            if (obj_Supplier.Supplier_Type.ToString() == "F")
             {
-                throw new ValidationException("Company are not permitted for individuals under 18 years of age.");
+                Age = CalculateAge(obj_Supplier.Supplier_BirthDate ?? DateTime.Now);
+
+                //If the company is based in Paraná, it is not allowed to register an individual supplier who is underage.
+                if (obj_Company.Company_State == "PR" && Age < 18)
+                {
+                    throw new ValidationException("Company are not permitted for individuals under 18 years of age.");
+                }
             }
 
             await _companySupplierRepository.SaveCompanySupplier(companysupplier.Company_Cnpj.ToString(), companysupplier.CpfCnpj.ToString());
