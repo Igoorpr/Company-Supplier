@@ -24,13 +24,13 @@ builder.Services.AddAplication();
 //Middleware
 builder.Services.AddControllers(filters =>
 {
-    // Registro do filtro global (aplicado em todas as requisições)
+    // Registro do filtro global (aplicado em todas as requisiÃ§Ãµes)
     filters.Filters.Add<ConfigFilter>();
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(c =>
 {
-    // Documentação do Swagger (Cabeçalho)
+    // DocumentaÃ§Ã£o do Swagger (CabeÃ§alho)
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "SUPPLIER AND COMPANY APPLICATION",
@@ -48,16 +48,14 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UsePathBase("/cs");
+
 // Configure the HTTP request pipeline.
 switch (app.Environment.EnvironmentName)
 {
-    case "Localhost":
-        app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "COMPANY_SUPPLIER.MVC v1"));
-        break;
     case "Development":
     case "Staging":
+    case "Production":
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/cs/swagger/v1/swagger.json", "COMPANY_SUPPLIER.MVC v1"));
